@@ -69,6 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             T_WINNING+" INTEGER);";
 
 
+
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
