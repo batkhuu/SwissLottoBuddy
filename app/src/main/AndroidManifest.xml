@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.batkhuu.swisslottobuddy" >
+    
+    <uses-permission android:name="android.permission.INTERNET" />  <!-- Wird für XML Download benötigt -->
 
     <application
         android:allowBackup="true"
