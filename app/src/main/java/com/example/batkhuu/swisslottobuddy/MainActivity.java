@@ -19,19 +19,10 @@ import android.view.ViewGroup;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+    // keeps fragments in memory
     SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+    // host of the contents
     ViewPager mViewPager;
 
     @Override
@@ -72,11 +63,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
-
-        // add examples into db
-        // DB-Instance
-        DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
-        dbh.addDraw();
     }
 
 
@@ -92,32 +78,26 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_refresh) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                refresh();
+                return true;
+            case R.id.action_backup:
+                backup();
+                return true;
+            case R.id.action_restore:
+                restore();
+                return true;
+            case R.id.action_exit:
+                exit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        if (id == R.id.action_backup) {
-            return true;
-        }
-
-        if (id == R.id.action_restore) {
-            return true;
-        }
-
-        if (id == R.id.action_exit) {
-            finish();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
@@ -211,5 +191,28 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return rootView;
         }
     }
+
+    // ################################################################################
+    // Custom methods start here
+    // ################################################################################
+
+    private void refresh() {
+        // DB-Instance
+        DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
+        // add examples into db
+        dbh.addDraw();
+    }
+
+    public void backup() {
+    }
+
+    public void restore() {
+
+    }
+
+    public void exit() {
+        finish();
+    }
+
 
 }

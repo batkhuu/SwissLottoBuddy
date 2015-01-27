@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.batkhuu.swisslottobuddy.StartFragment">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,12 +18,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text="Ziehung von:"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text=""
                 android:id="@+id/drawdate" />
         </LinearLayout>
@@ -37,12 +39,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text="Jackpot:"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text=""
                 android:id="@+id/jackpot" />
         </LinearLayout>
@@ -56,12 +60,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text="Gewinnzahlen:"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text=""
                 android:id="@+id/numbers" />
         </LinearLayout>
@@ -75,12 +81,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text="Glückszahl:"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text=""
                 android:id="@+id/luckynumber" />
         </LinearLayout>
@@ -94,12 +102,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text="Replay-#:"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text=""
                 android:id="@+id/replaynumber" />
         </LinearLayout>
@@ -113,12 +123,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text="nächste Ziehung:"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_weight="1"
                 android:text=""
                 android:id="@+id/nextdrawdate" />
         </LinearLayout>

@@ -1,7 +1,6 @@
 package com.example.batkhuu.swisslottobuddy;
 
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

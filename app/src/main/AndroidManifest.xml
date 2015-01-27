@@ -3,6 +3,8 @@
     package="com.example.batkhuu.swisslottobuddy" >
     
     <uses-permission android:name="android.permission.INTERNET" />  <!-- Wird für XML Download benötigt -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- Schreiben auf die ext. Karte -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> <!-- Lesen von der ext. Karte-->
 
     <application
         android:allowBackup="true"
