@@ -2,6 +2,9 @@ package com.example.batkhuu.swisslottobuddy;
 
 import java.util.Locale;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,11 +23,17 @@ import android.view.ViewGroup;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
+    // static variables
+    public static final String XMLURL = "http://www.swisslos.ch/swisslotto/lottonormal_teaser_getdata.do";
+
     // keeps fragments in memory
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     // host of the contents
     ViewPager mViewPager;
+
+    // DB-Instance
+    DatabaseHandler dbh = new DatabaseHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,15 +202,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
-    // ################################################################################
-    // Custom methods start here
-    // ################################################################################
+    /**
+     * ################################################################################
+     * Custom methods start here
+     * ################################################################################
+     */
 
     private void refresh() {
-        // DB-Instance
-        DatabaseHandler dbh = new DatabaseHandler(getApplicationContext());
         // add examples into db
-        dbh.addDraw();
+        // dbh.addDraw();
+        fetchXml();
     }
 
     public void backup() {
@@ -212,6 +223,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void exit() {
         finish();
+    }
+
+    public void fetchXml() {
+        // check network connection before donwload
+        if (isOnline()) {
+            Log.v(getString(R.string.logVTag), "fetchXML: connected");
+            new XmlHandler().execute(XMLURL);
+        } else {
+            Log.v(getString(R.string.logVTag), "fetchXML: not connected");
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
 

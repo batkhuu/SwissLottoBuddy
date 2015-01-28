@@ -1,7 +1,7 @@
 package com.example.batkhuu.swisslottobuddy;
 
 
-import android.util.Log;
+import android.content.ContentValues;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -11,20 +11,24 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class XmlParser {
-    public void parse(InputStream in) throws XmlPullParserException, IOException {
-        Log.w("parse", "am laufen");
+
+    private static final String ns = null;
+
+    public ContentValues parse(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(in, null);
             parser.nextTag();
-            //return readFeed(parser);
+            return readFeed(parser);
         } finally {
             in.close();
         }
     }
 
-    private void readFeed(XmlPullParser parser) {
-        Log.w("readFeed", "am laufen");
+    private ContentValues readFeed(XmlPullParser parser) {
+        ContentValues contentValues = new ContentValues();
+
+        return null;
     }
 }

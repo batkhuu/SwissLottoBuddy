@@ -11,33 +11,38 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class XmlHandler extends AsyncTask<ContentValues, Void, ContentValues> {
-
-    public static final String XMLURL = "http://www.swisslos.ch/swisslotto/lottonormal_teaser_getdata.do";
-    public InputStream inputStream = null;
+public class XmlHandler extends AsyncTask<String, Void, String> {
 
     @Override
-    protected ContentValues doInBackground(ContentValues... params) {
+    protected String doInBackground(String... urls) {
         try {
-            inputStream = downloadUrl();
-            XmlParser parser = new XmlParser();
-            parser.parse(inputStream);
+            downloadXml(urls[0]);
+            return "Successfully refreshed";
         } catch (IOException e) {
-            e.printStackTrace();
+            return "Unable to load content. Check your network connection.";
         } catch (XmlPullParserException e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            return "XML Parse Error";
         }
-        return null;
     }
 
-    private InputStream downloadUrl() throws IOException {
-        URL url = new URL(XMLURL);
+    private ContentValues downloadXml(String stringurl) throws IOException, XmlPullParserException {
+        InputStream is = null;
+        XmlParser xmlParser = new XmlParser();
+        ContentValues contentValues = null;
+
+        try {
+            is = downloadUrl(stringurl);
+            contentValues = xmlParser.parse(is);
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+        return contentValues;
+    }
+
+    private InputStream downloadUrl(String urlString) throws IOException {
+        URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setReadTimeout(10000 /* milliseconds */);
         conn.setConnectTimeout(15000 /* milliseconds */);

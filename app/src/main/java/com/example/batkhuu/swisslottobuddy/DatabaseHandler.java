@@ -32,6 +32,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String NUMBER_6 = "number6";
     private static final String L_NUMBER = "lucky_number";
     private static final String R_NUMBER = "replay_number";
+    // evt. add Win Rank
+    private static final String WCI_0 = "wci0"; // Win Class Index 0: 6 + 1
+    private static final String WCI_1 = "wci1"; // Win Class Index 0: 6
+    private static final String WCI_2 = "wci2"; // Win Class Index 0: 5 + 1
+    private static final String WCI_3 = "wci3"; // Win Class Index 0: 5
+    private static final String WCI_4 = "wci4"; // Win Class Index 0: 4 + 1
+    private static final String WCI_5 = "wci5"; // Win Class Index 0: 4
+    private static final String WCI_6 = "wci6"; // Win Class Index 0: 3 + 1
+    private static final String WCI_7 = "wci7"; // Win Class Index 0: 3
 
     // Tabelle TIPS Information
     private static final String TIPS_TABLE = "TIPS";

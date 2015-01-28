@@ -46,7 +46,7 @@ public class StartFragment extends Fragment {
             luckynumber = (TextView) view.findViewById(R.id.luckynumber);
             luckynumber.setText(cursor.getString(10));
             replaynumber = (TextView) view.findViewById(R.id.replaynumber);
-            replaynumber.setText(cursor.getString(11));
+            replaynumber.setText(cursor.getString(0));
         }
         return view;
     }
