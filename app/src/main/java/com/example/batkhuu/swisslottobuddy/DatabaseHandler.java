@@ -124,9 +124,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(R_NUMBER, "9");
 
         // 3. insert
-        db.insert(DRAWS_TABLE, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
+        db.insert(DRAWS_TABLE, null, values);
 
         // 4. close
         db.close();

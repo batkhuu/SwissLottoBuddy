@@ -9,7 +9,7 @@
     <string name="action_backup_title">Backup</string>
     <string name="action_restore_title">Restore</string>
     <string name="action_exit_title">Exit</string>
-    <string name="logVTag">fetchXML</string>
+    <string name="logVTag">SLB</string>
 
 
 </resources>

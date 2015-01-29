@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -210,7 +211,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private void refresh() {
         // add examples into db
-        // dbh.addDraw();
+        dbh.addDraw();
         fetchXml();
     }
 
@@ -231,8 +232,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             Log.v(getString(R.string.logVTag), "fetchXML: connected");
             new XmlHandler().execute(XMLURL);
         } else {
-            Log.v(getString(R.string.logVTag), "fetchXML: not connected");
-        }
+            Toast toast = Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT);
+            toast.show();        }
     }
 
     public boolean isOnline() {
