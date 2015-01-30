@@ -2,6 +2,7 @@ package com.example.batkhuu.swisslottobuddy;
 
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import org.xmlpull.v1.XmlPullParserException;
@@ -16,7 +17,7 @@ public class XmlHandler extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... urls) {
         try {
-            downloadXml(urls[0]);
+            ContentValues draw = downloadXml(urls[0]);
             return "Successfully refreshed";
         } catch (IOException e) {
             return "Unable to load content. Check your network connection.";

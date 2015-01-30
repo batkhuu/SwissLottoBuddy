@@ -211,7 +211,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private void refresh() {
         // add examples into db
-        dbh.addDraw();
         fetchXml();
     }
 
@@ -229,7 +228,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void fetchXml() {
         // check network connection before donwload
         if (isOnline()) {
-            Log.v(getString(R.string.logVTag), "fetchXML: connected");
             new XmlHandler().execute(XMLURL);
         } else {
             Toast toast = Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT);
