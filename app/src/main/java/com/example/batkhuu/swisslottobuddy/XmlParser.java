@@ -244,7 +244,7 @@ public class XmlParser {
             result = parser.getText();
             parser.nextTag();
         }
-        //Log.v("SLB", "Result: "+result);
+        Log.v("SLB", "Result: "+result);
         return result;
     }
 

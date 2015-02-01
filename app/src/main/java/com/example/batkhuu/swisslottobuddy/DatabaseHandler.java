@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -131,7 +132,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 //        values.put(R_NUMBER, "9");
 
         // 3. insert
-        db.insert(DRAWS_TABLE, null, values);
+        long i = db.insert(DRAWS_TABLE, null, values);
+        Log.v("SLB", "Result: " + i);
+
 
         // 4. close
         db.close();

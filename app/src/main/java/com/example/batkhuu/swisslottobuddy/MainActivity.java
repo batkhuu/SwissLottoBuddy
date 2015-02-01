@@ -2,6 +2,7 @@ package com.example.batkhuu.swisslottobuddy;
 
 import java.util.Locale;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -210,7 +211,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
 
     private void refresh() {
-        // add examples into db
+        Log.v("SLB", "Refresh clicked");
         fetchXml();
     }
 
@@ -228,10 +229,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void fetchXml() {
         // check network connection before donwload
         if (isOnline()) {
-            new XmlHandler().execute(XMLURL);
+            new XmlHandler().execute();
         } else {
             Toast toast = Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT);
-            toast.show();        }
+            toast.show();
+        }
     }
 
     public boolean isOnline() {
@@ -239,6 +241,4 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
-
-
 }
