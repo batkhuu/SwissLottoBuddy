@@ -4,4 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.batkhuu.swisslottobuddy.TippFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anzahl Tipps: "/>
+
+            <Spinner
+                android:id="@+id/number_tips"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/generate_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Generieren"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tip_result_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </FrameLayout>
