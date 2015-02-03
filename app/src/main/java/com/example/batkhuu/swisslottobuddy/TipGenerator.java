@@ -17,7 +17,7 @@ public class TipGenerator {
     public TipGenerator() {
     }
 
-    public ContentValues createTip(){
+    public ContentValues createTip() {
         ContentValues result = new ContentValues();
         List<Integer> numbers;
         int luckynumber = 0;
@@ -34,32 +34,20 @@ public class TipGenerator {
         //Log.v("SLB", "Luckynumber: "+luckynumber);
         result.put("lucky_number",luckynumber);
 
-        return null;
+        return result;
     }
 
     private List<Integer> createNumbers() {
         List<Integer> values = new ArrayList<>();
+        Random r = new Random();
 
         while (values.size()<=5){
-            Random r = new Random();
             boolean duplicate = false;
             int zahl = r.nextInt(max_nr - min + 1) + min;
 
-            //Log.v("SLB", "Number: "+zahl);
-
-            if (values.size()==0) {
+            if(!values.contains(zahl)){
                 values.add(zahl);
-            } else {
-                for (int value: values){
-                    if (value==zahl) {
-                        duplicate = true;
-                    }
-                }
-                if(!duplicate){
-                    values.add(zahl);
-                }
             }
-
         }
         Collections.sort(values);
         return values;
