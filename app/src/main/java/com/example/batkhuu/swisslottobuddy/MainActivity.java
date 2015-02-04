@@ -229,7 +229,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void fetchXml() {
         // check network connection before donwload
         if (isOnline()) {
-            new XmlHandler().execute();
+            XmlHandler xmlHandler = new XmlHandler();
+            String result = xmlHandler.handle();
+            //new XmlHandler().execute();
+            Toast toast = Toast.makeText(this, result, Toast.LENGTH_SHORT);
+            toast.show();
         } else {
             Toast toast = Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT);
             toast.show();

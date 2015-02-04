@@ -7,20 +7,25 @@ import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
-public class XmlHandler extends AsyncTask<Void, Void, String> {
+public class XmlHandler {
 
     // static variables
     public static final String XMLURL = "http://www.swisslos.ch/swisslotto/lottonormal_teaser_getdata.do";
 
-    @Override
-    protected String doInBackground(Void... params) {
+    public XmlHandler(){
+        // Required empty public constructor
+    }
+
+    public String handle() {
         try {
-            ContentValues draw = downloadXml(XMLURL);
+            ContentValues draw = downloadXml();
             //DatabaseHandler dbh = new DatabaseHandler(super);
             //dbh.addDraw(draw);
             //Log.v("SLB", "Result: " + draw.getAsString("win_class_index7"));
@@ -32,32 +37,44 @@ public class XmlHandler extends AsyncTask<Void, Void, String> {
         }
     }
 
-    public ContentValues downloadXml(String stringurl) throws IOException, XmlPullParserException {
+    private ContentValues downloadXml() throws IOException, XmlPullParserException {
         InputStream is = null;
         XmlParser xmlParser = new XmlParser();
         ContentValues contentValues = null;
 
         try {
-            is = downloadUrl(stringurl);
+            is = downloadUrl();
             contentValues = xmlParser.parse(is);
         } finally {
             if (is != null) {
                 is.close();
             }
         }
+
         return contentValues;
     }
 
-    private InputStream downloadUrl(String urlString) throws IOException {
-        URL url = new URL(urlString);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(10000 /* milliseconds */);
-        conn.setConnectTimeout(15000 /* milliseconds */);
-        conn.setRequestMethod("GET");
-        conn.setDoInput(true);
-        // Starts the query
-        conn.connect();
-        InputStream stream = conn.getInputStream();
-        return stream;
+    private InputStream downloadUrl() throws IOException {
+        InputStream is = null;
+        try {
+            URL url = new URL(XMLURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setRequestMethod("GET");
+            conn.setDoInput(true);
+            // Starts the query
+            Log.d("SLB", "conn.connect");
+            conn.connect();
+            int response = conn.getResponseCode();
+            Log.d("SLB", "The response is: " + response);
+            is = conn.getInputStream();
+
+            return is;
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
     }
 }
