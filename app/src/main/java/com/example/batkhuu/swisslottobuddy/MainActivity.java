@@ -1,6 +1,7 @@
 package com.example.batkhuu.swisslottobuddy;
 
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -92,7 +93,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                refresh();
+                try {
+                    refresh();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return true;
             case R.id.action_backup:
                 backup();
@@ -210,8 +215,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * ################################################################################
      */
 
-    private void refresh() {
-        Log.v("SLB", "Refresh clicked");
+    private void refresh() throws ExecutionException, InterruptedException {
         fetchXml();
     }
 
@@ -226,14 +230,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         finish();
     }
 
-    public void fetchXml() {
+    public void fetchXml() throws ExecutionException, InterruptedException {
         // check network connection before donwload
         if (isOnline()) {
-            XmlHandler xmlHandler = new XmlHandler();
-            String result = xmlHandler.handle();
-            //new XmlHandler().execute();
-            Toast toast = Toast.makeText(this, result, Toast.LENGTH_SHORT);
-            toast.show();
+            ContentValues result = new XmlHandler().execute().get();
+            if(result.size()>0) {
+                dbh.addDraw(result);
+                Toast toast = Toast.makeText(this, "Refresh successful", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else {
+                Toast toast = Toast.makeText(this, "Oops! There was an error!", Toast.LENGTH_SHORT);
+                toast.show();
+            }
         } else {
             Toast toast = Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT);
             toast.show();

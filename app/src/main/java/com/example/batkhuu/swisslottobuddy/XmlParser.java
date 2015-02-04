@@ -11,6 +11,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class XmlParser {
@@ -56,9 +57,9 @@ public class XmlParser {
             }
 
             if (parser.getName().equals(TAG_DD)) {
-                result.put(TAG_DD, readDrawDate(parser));
+                result.put("draw_date", readDrawDate(parser));
             } else if (parser.getName().equals(TAG_NDD)) {
-                result.put(TAG_NDD, readNextDrawDate(parser));
+                result.put("next_draw_date", readNextDrawDate(parser));
             } else if (parser.getName().equals(TAG_SL)) {
                 ContentValues sl = readSwissLotto(parser);
                 result.put(TAG_JP, sl.getAsString(TAG_JP));
@@ -244,7 +245,6 @@ public class XmlParser {
             result = parser.getText();
             parser.nextTag();
         }
-        Log.v("SLB", "Result: "+result);
         return result;
     }
 

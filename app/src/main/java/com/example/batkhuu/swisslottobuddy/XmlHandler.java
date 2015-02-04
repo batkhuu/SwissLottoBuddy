@@ -14,26 +14,20 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class XmlHandler {
+public class XmlHandler extends AsyncTask<Void, Void, ContentValues> {
 
     // static variables
     public static final String XMLURL = "http://www.swisslos.ch/swisslotto/lottonormal_teaser_getdata.do";
 
-    public XmlHandler(){
-        // Required empty public constructor
-    }
-
-    public String handle() {
+    @Override
+    protected ContentValues doInBackground(Void... params) {
+        ContentValues draw = new ContentValues();
         try {
-            ContentValues draw = downloadXml();
-            //DatabaseHandler dbh = new DatabaseHandler(super);
-            //dbh.addDraw(draw);
-            //Log.v("SLB", "Result: " + draw.getAsString("win_class_index7"));
-            return "Successfully refreshed";
-        } catch (IOException e) {
-            return "Unable to load content. Check your network connection.";
-        } catch (XmlPullParserException e) {
-            return "XML Parse Error";
+            draw = downloadXml();
+            //return draw;
+            return draw;
+        } catch (Exception e) {
+            return draw;
         }
     }
 
@@ -55,26 +49,15 @@ public class XmlHandler {
     }
 
     private InputStream downloadUrl() throws IOException {
-        InputStream is = null;
-        try {
-            URL url = new URL(XMLURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            // Starts the query
-            Log.d("SLB", "conn.connect");
-            conn.connect();
-            int response = conn.getResponseCode();
-            Log.d("SLB", "The response is: " + response);
-            is = conn.getInputStream();
-
-            return is;
-        } finally {
-            if (is != null) {
-                is.close();
-            }
-        }
+        URL url = new URL(XMLURL);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(10000 /* milliseconds */);
+        conn.setConnectTimeout(15000 /* milliseconds */);
+        conn.setRequestMethod("GET");
+        conn.setDoInput(true);
+        // Starts the query
+        conn.connect();
+        InputStream is = conn.getInputStream();
+        return is;
     }
 }
