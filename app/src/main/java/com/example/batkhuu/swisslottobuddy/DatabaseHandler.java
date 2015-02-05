@@ -117,26 +117,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
-//        ContentValues values = new ContentValues();
-//        values.put(DD, "24.01.2015");
-//        values.put(NDD, "28.01.2015");
-//        values.put(JACKPOT, "2200000");
-//        values.put(NUMBER1, "3");
-//        values.put(NUMBER2, "11");
-//        values.put(NUMBER3, "15");
-//        values.put(NUMBER4, "20");
-//        values.put(NUMBER5, "25");
-//        values.put(NUMBER0, "41");
-//        values.put(L_NUMBER, "4");
-//        values.put(R_NUMBER, "9");
-
-        // 3. insert
+        // 2. insert
         long i = db.insert(DRAWS_TABLE, null, values);
-        Log.v("SLB", "Result: " + i);
 
-
-        // 4. close
+        // 3. close
         db.close();
     }
 

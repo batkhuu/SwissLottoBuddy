@@ -1,10 +1,14 @@
 package com.example.batkhuu.swisslottobuddy;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
@@ -37,6 +41,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     // DB-Instance
     DatabaseHandler dbh = new DatabaseHandler(this);
+
+    // for all Toasts
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,10 +223,39 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
 
     private void refresh() throws ExecutionException, InterruptedException {
-        fetchXml();
+        if (refreshNeeded()){
+            fetchXml();
+        } else {
+            toast = Toast.makeText(this, "Refresh not needed!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    private boolean refreshNeeded() {
+        // data from the last draw
+        Cursor lastDraw = dbh.getLastDraw();
+
+        if (lastDraw.moveToFirst()){
+            Date now = new Date();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
+            try {
+                Date dateNextDraw = simpleDateFormat.parse(lastDraw.getString(2));
+                if (now.after(dateNextDraw)){
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (ParseException e) {
+                return false;
+            }
+        } else {
+            return true; // if empty, then refresh
+        }
     }
 
     public void backup() {
+
     }
 
     public void restore() {
@@ -236,15 +272,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             ContentValues result = new XmlHandler().execute().get();
             if(result.size()>0) {
                 dbh.addDraw(result);
-                Toast toast = Toast.makeText(this, "Refresh successful", Toast.LENGTH_SHORT);
+                toast = Toast.makeText(this, "Refresh successful", Toast.LENGTH_SHORT);
                 toast.show();
             }
             else {
-                Toast toast = Toast.makeText(this, "Oops! There was an error!", Toast.LENGTH_SHORT);
+                toast = Toast.makeText(this, "Oops! There was an error!", Toast.LENGTH_SHORT);
                 toast.show();
             }
         } else {
-            Toast toast = Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT);
             toast.show();
         }
     }

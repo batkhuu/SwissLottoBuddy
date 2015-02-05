@@ -34,7 +34,6 @@ public class StartFragment extends Fragment {
 
         // Set Text for Startpage
         if (cursor.moveToFirst()){
-            cursor.moveToFirst();
             drawdate = (TextView) view.findViewById(R.id.drawdate);
             drawdate.setText(cursor.getString(1));
             nextdrawdate = (TextView) view.findViewById(R.id.nextdrawdate);
