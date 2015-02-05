@@ -44,15 +44,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TIPS_TABLE = "TIPS";
 
     // Spalten von TIPS
-    private static final String T_ID = "_id";
-    private static final String T_DD = "draw_date";
-    private static final String T_NUMBER1 = "number1";
-    private static final String T_NUMBER2 = "number2";
-    private static final String T_NUMBER3 = "number3";
-    private static final String T_NUMBER4 = "number4";
-    private static final String T_NUMBER5 = "number5";
-    private static final String T_NUMBER6 = "number6";
-    private static final String T_L_NUMBER = "lucky_number";
     private static final String T_WINNING = "winning";
 
     // Query um die Tabelle zu kreieren
@@ -78,18 +69,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             WCI6+" INTEGER, "+
             WCI7+" INTEGER);";
     private static final String create_Table_Tips = "CREATE TABLE "+TIPS_TABLE+"("+
-            T_ID+" INTEGER PRIMARY KEY, "+
-            T_DD+" INTEGER, "+
-            T_NUMBER1 +" INTEGER, "+
-            T_NUMBER2 +" INTEGER, "+
-            T_NUMBER3 +" INTEGER, "+
-            T_NUMBER4 +" INTEGER, "+
-            T_NUMBER5 +" INTEGER, "+
-            T_NUMBER6 +" INTEGER, "+
-            T_L_NUMBER+" INTEGER, "+
+            D_ID+" INTEGER PRIMARY KEY, "+
+            DD+" INTEGER, "+
+            NUMBER0 +" INTEGER, "+
+            NUMBER1 +" INTEGER, "+
+            NUMBER2 +" INTEGER, "+
+            NUMBER3 +" INTEGER, "+
+            NUMBER4 +" INTEGER, "+
+            NUMBER5 +" INTEGER, "+
+            L_NUMBER+" INTEGER, "+
             T_WINNING+" INTEGER);";
     private static final String[] D_COLUMNS = {D_ID, DD, NDD, JACKPOT, NUMBER0, NUMBER1, NUMBER2, NUMBER3, NUMBER4, NUMBER5, L_NUMBER, R_NUMBER, WCI0, WCI1, WCI2, WCI3, WCI4, WCI5, WCI6, WCI7};
-    private static final String[] T_COLUMNS = {T_ID, T_DD, T_NUMBER1, T_NUMBER2, T_NUMBER3, T_NUMBER4, T_NUMBER5, T_NUMBER6, T_L_NUMBER, T_WINNING};
+    private static final String[] T_COLUMNS = {D_ID, DD, NUMBER0, NUMBER1, NUMBER2, NUMBER3, NUMBER4, NUMBER5, L_NUMBER, T_WINNING};
 
     // Queries
     private static final String lastDraw = "SELECT * FROM "+DRAWS_TABLE+" ORDER BY "+D_ID+" DESC LIMIT 1;"; // Query für letzte Ziehungsdaten
@@ -130,15 +121,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(T_DD, "28.01.2015");
-        values.put(T_NUMBER1, "4");
-        values.put(T_NUMBER2, "13");
-        values.put(T_NUMBER3, "15");
-        values.put(T_NUMBER4, "23");
-        values.put(T_NUMBER5, "29");
-        values.put(T_NUMBER6, "40");
-        values.put(T_L_NUMBER, "2");
-        values.put(T_WINNING, "");
+        values.put(DD, "28.01.2015");
+        values.put(NUMBER0, "40");
+        values.put(NUMBER1, "4");
+        values.put(NUMBER2, "13");
+        values.put(NUMBER3, "15");
+        values.put(NUMBER4, "23");
+        values.put(NUMBER5, "29");
+        values.put(L_NUMBER, "2");
+        values.put(T_WINNING, "2.5");
 
         // 3. insert
         db.insert(TIPS_TABLE, // table

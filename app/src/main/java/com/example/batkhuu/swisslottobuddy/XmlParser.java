@@ -11,7 +11,6 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class XmlParser {
@@ -46,10 +45,13 @@ public class XmlParser {
         }
     }
 
+    // reads everything under root-tag
+    // for deeper level this method calls another method
+    // at the end this method returns a ContentValues-Object
     private ContentValues readXml(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, TAG_ROOT);
         ContentValues result = new ContentValues();
 
-        parser.require(XmlPullParser.START_TAG, ns, TAG_ROOT);
         while (parser.next() != XmlPullParser.END_TAG) {
 
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -101,9 +103,8 @@ public class XmlParser {
     }
 
     private ContentValues readSwissLotto(XmlPullParser parser) throws IOException, XmlPullParserException {
-        ContentValues result = new ContentValues();
-
         parser.require(XmlPullParser.START_TAG, ns, TAG_SL);
+        ContentValues result = new ContentValues();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -156,8 +157,7 @@ public class XmlParser {
 
     private List<String> readNumbers(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, TAG_NRS);
-
-        List<String> numbers = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -165,12 +165,12 @@ public class XmlParser {
             }
 
             if (parser.getName().equals(TAG_NR)) {
-                numbers.add(readNumber(parser));
+                result.add(readNumber(parser));
             } else {
                 skip(parser);
             }
         }
-        return numbers;
+        return result;
     }
 
     private String readNumber(XmlPullParser parser) throws IOException, XmlPullParserException {
@@ -182,8 +182,7 @@ public class XmlParser {
 
     private List<String> readWinRanks(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, TAG_WRS);
-
-        List<String> winrankings = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -195,19 +194,17 @@ public class XmlParser {
                 winrank = readWinRank(parser);
                 int pos = Integer.parseInt(winrank.get(1));
                 String wr = winrank.get(0);
-                winrankings.add(pos, wr);
+                result.add(pos, wr);
             } else {
                 skip(parser);
             }
         }
-        return winrankings;
+        return result;
     }
 
     private List<String> readWinRank(XmlPullParser parser) throws IOException, XmlPullParserException {
-
         parser.require(XmlPullParser.START_TAG, ns, TAG_WR);
-
-        List<String> winrank = new ArrayList<String>();
+        List<String> result = new ArrayList<String>();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -215,14 +212,14 @@ public class XmlParser {
             }
 
             if (parser.getName().equals(TAG_AM)) {
-                winrank.add(0, readAmount(parser));
+                result.add(0, readAmount(parser));
             } else if (parser.getName().equals(TAG_WCI)) {
-                winrank.add(1, readWinClassIndex(parser));
+                result.add(1, readWinClassIndex(parser));
             } else {
                 skip(parser);
             }
         }
-        return winrank;
+        return result;
     }
 
     private String readAmount(XmlPullParser parser) throws IOException, XmlPullParserException {

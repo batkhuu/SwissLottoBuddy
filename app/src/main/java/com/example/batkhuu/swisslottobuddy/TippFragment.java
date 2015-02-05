@@ -28,8 +28,7 @@ public class TippFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tipp, container, false);
 
@@ -38,8 +37,8 @@ public class TippFragment extends Fragment {
 
         generate_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                // Anzahl zu generierende Tipps
+                // TODO: maybe create objects outside method
+                // Number of tips to generate
                 int i = spinner.getSelectedItemPosition()+2;
                 List<ContentValues> tips = new ArrayList<>();
                 TipGenerator tipGenerator = new TipGenerator();

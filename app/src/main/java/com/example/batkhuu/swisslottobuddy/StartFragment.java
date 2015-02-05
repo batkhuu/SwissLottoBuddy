@@ -34,17 +34,17 @@ public class StartFragment extends Fragment {
 
         // Set Text for Startpage
         if (cursor.moveToFirst()){
-            drawdate = (TextView) view.findViewById(R.id.drawdate);
+            drawdate = (TextView) view.findViewById(R.id.draw_date);
             drawdate.setText(cursor.getString(1));
-            nextdrawdate = (TextView) view.findViewById(R.id.nextdrawdate);
+            nextdrawdate = (TextView) view.findViewById(R.id.next_draw_date);
             nextdrawdate.setText(cursor.getString(2));
             jackpot = (TextView) view.findViewById(R.id.jackpot);
             jackpot.setText(cursor.getString(3));
             numbers = (TextView) view.findViewById(R.id.numbers);
             numbers.setText(cursor.getString(4)+", "+cursor.getString(5)+", "+cursor.getString(6)+", "+cursor.getString(7)+", "+cursor.getString(8)+", "+cursor.getString(9));
-            luckynumber = (TextView) view.findViewById(R.id.luckynumber);
+            luckynumber = (TextView) view.findViewById(R.id.lucky_number);
             luckynumber.setText(cursor.getString(10));
-            replaynumber = (TextView) view.findViewById(R.id.replaynumber);
+            replaynumber = (TextView) view.findViewById(R.id.replay_number);
             replaynumber.setText(cursor.getString(0));
         }
         return view;

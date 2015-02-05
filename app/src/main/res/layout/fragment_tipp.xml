@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Anzahl Tipps: "/>
+                android:text="@string/number_tips"/>
 
             <Spinner
                 android:id="@+id/number_tips"
@@ -31,7 +31,7 @@
                 android:id="@+id/generate_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Generieren"/>
+                android:text="@string/btn_generate"/>
 
         </LinearLayout>
 

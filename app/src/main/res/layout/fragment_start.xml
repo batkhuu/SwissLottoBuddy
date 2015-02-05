@@ -18,13 +18,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ziehung von:"/>
+                android:text="@string/draw_date"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/drawdate" />
+                android:id="@+id/draw_date" />
         </LinearLayout>
 
         <LinearLayout
@@ -35,12 +34,11 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Jackpot:"/>
+                android:text="@string/jackpot"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:id="@+id/jackpot" />
         </LinearLayout>
 
@@ -52,12 +50,11 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gewinnzahlen:"/>
+                android:text="@string/numbers"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:id="@+id/numbers" />
         </LinearLayout>
 
@@ -69,13 +66,12 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Glückszahl:"/>
+                android:text="@string/lucky_number"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/luckynumber" />
+                android:id="@+id/lucky_number" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,13 +82,12 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Replay-#:"/>
+                android:text="@string/replay_number"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/replaynumber" />
+                android:id="@+id/replay_number" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,13 +98,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="nächste Ziehung:"/>
+                android:text="@string/next_draw_date"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/nextdrawdate" />
+                android:id="@+id/next_draw_date" />
         </LinearLayout>
 
     </LinearLayout>

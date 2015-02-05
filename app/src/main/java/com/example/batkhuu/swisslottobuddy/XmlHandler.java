@@ -15,37 +15,35 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class XmlHandler extends AsyncTask<Void, Void, ContentValues> {
-
-    // static variables
+    // Swiss Lotto XML URL
     public static final String XMLURL = "http://www.swisslos.ch/swisslotto/lottonormal_teaser_getdata.do";
 
     @Override
     protected ContentValues doInBackground(Void... params) {
-        ContentValues draw = new ContentValues();
+        ContentValues result = new ContentValues();
         try {
-            draw = downloadXml();
+            result = downloadXml();
             //return draw;
-            return draw;
+            return result;
         } catch (Exception e) {
-            return draw;
+            return result;
         }
     }
 
     private ContentValues downloadXml() throws IOException, XmlPullParserException {
         InputStream is = null;
         XmlParser xmlParser = new XmlParser();
-        ContentValues contentValues = null;
+        ContentValues result = null;
 
         try {
             is = downloadUrl();
-            contentValues = xmlParser.parse(is);
+            result = xmlParser.parse(is);
         } finally {
             if (is != null) {
                 is.close();
             }
         }
-
-        return contentValues;
+        return result;
     }
 
     private InputStream downloadUrl() throws IOException {

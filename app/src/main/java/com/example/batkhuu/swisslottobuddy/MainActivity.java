@@ -83,6 +83,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
+        // always check oncreate if refresh needed
+        try {
+            refresh();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -267,7 +274,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void fetchXml() throws ExecutionException, InterruptedException {
-        // check network connection before donwload
+        // check network connection before download
         if (isOnline()) {
             ContentValues result = new XmlHandler().execute().get();
             if(result.size()>0) {
