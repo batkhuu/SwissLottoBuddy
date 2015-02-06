@@ -20,19 +20,19 @@
     <string name="btn_generate">Generieren</string>
 
     <string-array name="number_tips">
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
+        <item>2 Tipps generieren</item>
+        <item>3 Tipps generieren</item>
+        <item>4 Tipps generieren</item>
+        <item>5 Tipps generieren</item>
+        <item>6 Tipps generieren</item>
+        <item>7 Tipps generieren</item>
+        <item>8 Tipps generieren</item>
+        <item>9 Tipps generieren</item>
+        <item>10 Tipps generieren</item>
+        <item>11 Tipps generieren</item>
+        <item>12 Tipps generieren</item>
+        <item>13 Tipps generieren</item>
+        <item>14 Tipps generieren</item>
     </string-array>
 
 </resources>
