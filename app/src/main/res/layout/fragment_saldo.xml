@@ -6,10 +6,12 @@
     android:padding="10dp"
     tools:context="com.example.batkhuu.swisslottobuddy.TippFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Saldo-Seite" />
-
+        android:layout_height="match_parent">
+        <Spinner
+            android:id="@+id/saldo_filter"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
 </FrameLayout>

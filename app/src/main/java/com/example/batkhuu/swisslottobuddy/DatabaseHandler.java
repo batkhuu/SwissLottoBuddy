@@ -45,6 +45,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Spalten von TIPS
     private static final String T_WINNING = "winning";
+    private static final String T_SPENDING = "spending";
 
     // Query um die Tabelle zu kreieren
     private static final String create_Table_Draws = "CREATE TABLE "+DRAWS_TABLE+"("+
@@ -69,7 +70,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             WCI6+" INTEGER, "+
             WCI7+" INTEGER);";
     private static final String create_Table_Tips = "CREATE TABLE "+TIPS_TABLE+"("+
-            D_ID+" INTEGER PRIMARY KEY, "+
+            D_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
             DD+" INTEGER, "+
             NUMBER0 +" INTEGER, "+
             NUMBER1 +" INTEGER, "+
@@ -78,12 +79,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             NUMBER4 +" INTEGER, "+
             NUMBER5 +" INTEGER, "+
             L_NUMBER+" INTEGER, "+
+            T_SPENDING+" INTEGER, "+
             T_WINNING+" INTEGER);";
-    private static final String[] D_COLUMNS = {D_ID, DD, NDD, JACKPOT, NUMBER0, NUMBER1, NUMBER2, NUMBER3, NUMBER4, NUMBER5, L_NUMBER, R_NUMBER, WCI0, WCI1, WCI2, WCI3, WCI4, WCI5, WCI6, WCI7};
-    private static final String[] T_COLUMNS = {D_ID, DD, NUMBER0, NUMBER1, NUMBER2, NUMBER3, NUMBER4, NUMBER5, L_NUMBER, T_WINNING};
+    private static final String[] D_COLUMNS = {D_ID, DD, NDD, JACKPOT, NUMBER0, NUMBER1, NUMBER2,
+            NUMBER3, NUMBER4, NUMBER5, L_NUMBER, R_NUMBER, WCI0, WCI1, WCI2, WCI3, WCI4, WCI5,
+            WCI6, WCI7};
+    private static final String[] T_COLUMNS = {D_ID, DD, NUMBER0, NUMBER1, NUMBER2, NUMBER3,
+            NUMBER4, NUMBER5, L_NUMBER, T_SPENDING, T_WINNING};
 
     // Queries
     private static final String lastDraw = "SELECT * FROM "+DRAWS_TABLE+" ORDER BY "+D_ID+" DESC LIMIT 1;"; // Query für letzte Ziehungsdaten
+    private static final String lastDrawID = "SELECT "+D_ID+" FROM "+DRAWS_TABLE+" ORDER BY "+D_ID+" DESC LIMIT 1"; // Query für letzte Ziehungsdaten
+    private static final String nextDrawTips = "SELECT * FROM "+TIPS_TABLE+" WHERE "+DD+"=("+lastDrawID+");";
 
 
     public DatabaseHandler(Context context) {
@@ -100,7 +107,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+DRAWS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+TIPS_TABLE);
-
         onCreate(db);
     }
 
@@ -115,23 +121,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addTip(){
+    public void addTip(ContentValues values){
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
-        ContentValues values = new ContentValues();
-        values.put(DD, "28.01.2015");
-        values.put(NUMBER0, "40");
-        values.put(NUMBER1, "4");
-        values.put(NUMBER2, "13");
-        values.put(NUMBER3, "15");
-        values.put(NUMBER4, "23");
-        values.put(NUMBER5, "29");
-        values.put(L_NUMBER, "2");
-        values.put(T_WINNING, "2.5");
-
-        // 3. insert
+        // 2. insert
         db.insert(TIPS_TABLE, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
@@ -153,5 +147,40 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         } else {
             return null;
         }
+    }
+
+    public Cursor getNdTips() {
+        // 1. get reference to readable DB
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // 2. build query
+        Cursor cursor = db.rawQuery(nextDrawTips, null);
+
+        // 3. return book
+        if (cursor != null) {
+            return cursor;
+        } else {
+            return null;
+        }
+    }
+
+    public Cursor get0() {
+        return null;
+    }
+
+    public Cursor get1() {
+        return null;
+    }
+
+    public Cursor get2() {
+        return null;
+    }
+
+    public Cursor get3() {
+        return null;
+    }
+
+    public Cursor get4() {
+        return null;
     }
 }

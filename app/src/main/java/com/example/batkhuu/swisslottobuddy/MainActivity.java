@@ -244,10 +244,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         if (lastDraw.moveToFirst()){
             Date now = new Date();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
             try {
-                Date dateNextDraw = simpleDateFormat.parse(lastDraw.getString(2));
+                Date dateNextDraw = sdf.parse(lastDraw.getString(2)+" 23:59");
                 if (now.after(dateNextDraw)){
                     return true;
                 } else {
@@ -262,7 +262,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void backup() {
+        Cursor cs = dbh.getNdTips();
+        Log.v("SLB", String.valueOf(cs.getCount()));
 
+        if (cs.moveToFirst()) {
+            Log.v("SLB", " Tipps: " + cs.getString(1));
+            while (cs.moveToNext()) {
+                Log.v("SLB", " Tipps: " + cs.getString(1));
+            }
+        }
     }
 
     public void restore() {
