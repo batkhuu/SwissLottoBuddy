@@ -2,10 +2,10 @@ package com.example.batkhuu.swisslottobuddy;
 
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +31,15 @@ public class TippFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_tipp, container, false);
         final DatabaseHandler dbh = new DatabaseHandler(super.getActivity());
         final TextView tip1, tip2, tip3, tip4, tip5, tip6, tip7, tip8, tip9, tip10, tip11, tip12, tip13, tip14;
+
+        final Context context = getActivity();
+        final Toast[] toast = new Toast[1];
 
         final Spinner spinner = (Spinner) view.findViewById(R.id.number_tips);
         Button generate_btn = (Button) view.findViewById(R.id.generate_btn);
@@ -80,10 +82,9 @@ public class TippFragment extends Fragment {
                 int i = spinner.getSelectedItemPosition()+2;
                 final List<ContentValues> tips = new ArrayList<>();
                 TipGenerator tipGenerator = new TipGenerator();
-                Cursor lastDraw = dbh.getLastDraw();
 
                 for (int pos=0; pos<i; pos++){
-                    ContentValues tip = null;
+                    ContentValues tip;
                     tip = tipGenerator.createTip();
                     tips.add(pos,tip);
                     if(pos==0){
@@ -159,7 +160,7 @@ public class TippFragment extends Fragment {
                     }
                 }
 
-                save_btn.setVisibility(view.VISIBLE);
+                save_btn.setVisibility(View.VISIBLE);
                 save_btn.setClickable(true);
 
                 save_btn.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +171,12 @@ public class TippFragment extends Fragment {
                                 tip.put("draw_date",dd);
                                 tip.put("spending", "2.50");
                                 dbh.addTip(tip);
+                                toast[0] = Toast.makeText(context, "Tips saved!", Toast.LENGTH_SHORT);
+                                toast[0].show();
                             }
+                        } else {
+                            toast[0] = Toast.makeText(context, "Next Draw Date not known!", Toast.LENGTH_SHORT);
+                            toast[0].show();
                         }
 
                         // clear TextViews
@@ -189,7 +195,7 @@ public class TippFragment extends Fragment {
                         tip13.setText(" ");
                         tip14.setText(" ");
 
-                        save_btn.setVisibility(view.INVISIBLE);
+                        save_btn.setVisibility(View.INVISIBLE);
                         save_btn.setClickable(false);
                     }
 

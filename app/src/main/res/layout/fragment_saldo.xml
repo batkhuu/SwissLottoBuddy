@@ -6,12 +6,61 @@
     android:padding="10dp"
     tools:context="com.example.batkhuu.swisslottobuddy.TippFragment">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Spinner
-            android:id="@+id/saldo_filter"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
+
+            <Spinner
+                android:id="@+id/saldo_filter"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Ausgaben:"/>
+
+            <TextView
+                android:id="@+id/ausgaben"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Gewinn:"/>
+
+            <TextView
+                android:id="@+id/gewinn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </FrameLayout>

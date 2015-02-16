@@ -4,7 +4,6 @@ package com.example.batkhuu.swisslottobuddy;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,16 +51,13 @@ public class StartFragment extends Fragment {
         tips_nd = (TextView) view.findViewById(R.id.tips_nd);
 
         if (ndTips.moveToFirst()){
-            ndTips.moveToFirst();
-            String tips = ndTips.getString(2)+" "+ndTips.getString(3)+" "+ndTips.getString(4)+" "
-                    +ndTips.getString(5)+" "+ndTips.getString(6)+" "+ndTips.getString(7)+" "+
-                    ndTips.getString(8)+"\n";
-
-            while (ndTips.moveToNext()){
+            String tips = "";
+            do {
                 tips = tips+ndTips.getString(2)+" "+ndTips.getString(3)+" "+ndTips.getString(4)+" "
                         +ndTips.getString(5)+" "+ndTips.getString(6)+" "+ndTips.getString(7)+" "+
                         ndTips.getString(8)+"\n";
-            }
+            } while (ndTips.moveToNext());
+
             tips_nd.setText("Tipps für die nächste Ziehung:\n"+tips);
         } else {
             tips_nd.setText("Keine Tipps für die nächste Ziehung");

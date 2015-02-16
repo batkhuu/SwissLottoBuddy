@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 /**
@@ -18,11 +19,9 @@ import android.widget.Spinner;
  */
 public class SaldoFragment extends Fragment {
 
-
     public SaldoFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,6 +29,11 @@ public class SaldoFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_saldo, container, false);
         final DatabaseHandler dbh = new DatabaseHandler(super.getActivity());
         final Spinner spinner = (Spinner) view.findViewById(R.id.saldo_filter);
+        final TextView ausgaben, gewinn;
+
+        ausgaben = (TextView) view.findViewById(R.id.ausgaben);
+        gewinn = (TextView) view.findViewById(R.id.gewinn);
+
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(super.getActivity(),
@@ -60,7 +64,8 @@ public class SaldoFragment extends Fragment {
                 if (cs == null) {
                     Log.v("SLB", "hat null");
                 } else if (cs.moveToFirst()) {
-                    Log.v("SLB", "hat daten");
+                    ausgaben.setText(cs.getString(0));
+                    gewinn.setText(cs.getString(1));
                 }
             }
 

@@ -2,7 +2,6 @@ package com.example.batkhuu.swisslottobuddy;
 
 
 import android.content.ContentValues;
-import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -157,7 +156,7 @@ public class XmlParser {
 
     private List<String> readNumbers(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, TAG_NRS);
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -182,7 +181,7 @@ public class XmlParser {
 
     private List<String> readWinRanks(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, TAG_WRS);
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -204,7 +203,7 @@ public class XmlParser {
 
     private List<String> readWinRank(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, TAG_WR);
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -212,7 +211,8 @@ public class XmlParser {
             }
 
             if (parser.getName().equals(TAG_AM)) {
-                result.add(0, readAmount(parser));
+                String am = readAmount(parser).replaceAll("'","");
+                result.add(0, am);
             } else if (parser.getName().equals(TAG_WCI)) {
                 result.add(1, readWinClassIndex(parser));
             } else {

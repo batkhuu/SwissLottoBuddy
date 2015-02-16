@@ -2,7 +2,9 @@ package com.example.batkhuu.swisslottobuddy;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
@@ -20,18 +22,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
-
-    // static variables
-    public static final String XMLURL = "http://www.swisslos.ch/swisslotto/lottonormal_teaser_getdata.do";
 
     // keeps fragments in memory
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -138,6 +134,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        // this code refreshes the fragments
+        mViewPager.setCurrentItem(tab.getPosition());
     }
 
     /**
@@ -157,14 +155,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // return PlaceholderFragment.newInstance(position + 1);
             switch (position) {
                 case 0:
-                    Fragment fragmentStart = new StartFragment();
-                    return fragmentStart;
+                    return new StartFragment();
                 case 1:
-                    Fragment fragmentTipp = new TippFragment();
-                    return fragmentTipp;
+                    return new TippFragment();
                 case 2:
-                    Fragment fragmentSaldo = new SaldoFragment();
-                    return fragmentSaldo;
+                    return new SaldoFragment();
             }
             return null;
         }
@@ -190,20 +185,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
-    /**
+/*    *//**
      * A placeholder fragment containing a simple view.
-     */
+     *//*
     public static class PlaceholderFragment extends Fragment {
-        /**
+        *//**
          * The fragment argument representing the section number for this
          * fragment.
-         */
+         *//*
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
+        *//**
          * Returns a new instance of this fragment for the given section
          * number.
-         */
+         *//*
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -221,7 +216,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             View rootView = inflater.inflate(R.layout.fragment_start, container, false);
             return rootView;
         }
-    }
+    }*/
 
     /**
      * ################################################################################
@@ -231,46 +226,62 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private void refresh() throws ExecutionException, InterruptedException {
         if (refreshNeeded()){
-            fetchXml();
+            String msg = fetchXml();
+            mViewPager.setCurrentItem(0);
+            toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+            toast.show();
         } else {
-            toast = Toast.makeText(this, "Refresh not needed!", Toast.LENGTH_SHORT);
+            toast = Toast.makeText(this, "Data up to date!", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
 
     private boolean refreshNeeded() {
-        // data from the last draw
-        Cursor lastDraw = dbh.getLastDraw();
-
-        if (lastDraw.moveToFirst()){
-            Date now = new Date();
+        Cursor cursor = dbh.getLastDraw();
+        if (cursor.moveToFirst()) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-
+            SimpleDateFormat sdf_wd = new SimpleDateFormat("dd.MM.yyyy");
+            Date weekday = new Date();
             try {
-                Date dateNextDraw = sdf.parse(lastDraw.getString(2)+" 23:59");
-                if (now.after(dateNextDraw)){
-                    return true;
-                } else {
-                    return false;
-                }
+                weekday = sdf_wd.parse(cursor.getString(2));
             } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Date now = new Date();
+            Date tip_adoption = new Date();
+            Date drawing = new Date();
+
+            // set last possible tip time
+            if (new SimpleDateFormat("EE").format(weekday).equals("Mi.")) {
+                try {
+                    drawing = sdf.parse(cursor.getString(2) + " 21:55");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else if (new SimpleDateFormat("EE").format(weekday).equals("Sa.")) {
+                try {
+                    drawing = sdf.parse(cursor.getString(2) + " 19:35");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (now.after(drawing)) {
+                Log.v("SLB","now: "+now);
+                Log.v("SLB","tip_adoption: "+tip_adoption);
+                Log.v("SLB","drawing: "+drawing);
+                return true;
+            } else {
                 return false;
             }
-        } else {
-            return true; // if empty, then refresh
+        }
+        else {
+            return true;
         }
     }
 
     public void backup() {
-        Cursor cs = dbh.getNdTips();
-        Log.v("SLB", String.valueOf(cs.getCount()));
 
-        if (cs.moveToFirst()) {
-            Log.v("SLB", " Tipps: " + cs.getString(1));
-            while (cs.moveToNext()) {
-                Log.v("SLB", " Tipps: " + cs.getString(1));
-            }
-        }
     }
 
     public void restore() {
@@ -281,22 +292,73 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         finish();
     }
 
-    public void fetchXml() throws ExecutionException, InterruptedException {
+    public String fetchXml() throws ExecutionException, InterruptedException {
         // check network connection before download
         if (isOnline()) {
             ContentValues result = new XmlHandler().execute().get();
             if(result.size()>0) {
+                checkWinning(result);
                 dbh.addDraw(result);
-                toast = Toast.makeText(this, "Refresh successful", Toast.LENGTH_SHORT);
-                toast.show();
+                return "Refresh successful";
             }
             else {
-                toast = Toast.makeText(this, "Oops! There was an error!", Toast.LENGTH_SHORT);
-                toast.show();
+                return "Oops! There was an error!";
             }
         } else {
-            toast = Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT);
-            toast.show();
+            return "No Connection";
+        }
+    }
+
+    public void checkWinning(ContentValues result) {
+        List<String> numbers = new ArrayList<>();
+        numbers.add(result.getAsString("number0"));
+        numbers.add(result.getAsString("number1"));
+        numbers.add(result.getAsString("number2"));
+        numbers.add(result.getAsString("number3"));
+        numbers.add(result.getAsString("number4"));
+        numbers.add(result.getAsString("number5"));
+
+        String luckynumber = result.getAsString("luckynumber");
+
+        Cursor tips = dbh.getNdTips();
+
+        if (tips.moveToFirst()) {
+            do {
+                int i = 0;
+                if (numbers.contains(tips.getString(2))) { i++; }
+                if (numbers.contains(tips.getString(3))) { i++; }
+                if (numbers.contains(tips.getString(4))) { i++; }
+                if (numbers.contains(tips.getString(5))) { i++; }
+                if (numbers.contains(tips.getString(6))) { i++; }
+                if (numbers.contains(tips.getString(7))) { i++; }
+
+                String winning = "0";
+
+                // erst ab 3 getroffenen Zahlen machen wir weiter
+                if (i>2 && luckynumber.equals(tips.getString(8))) {
+                    if (i==3) {
+                        winning = result.getAsString("win_class_index6");
+                    } else if (i==4) {
+                        winning = result.getAsString("win_class_index4");
+                    } else if (i==5) {
+                        winning = result.getAsString("win_class_index2");
+                    } else if (i==6) {
+                        winning = result.getAsString("win_class_index0");
+                    }
+                    dbh.updateTip(winning, tips.getString(0));
+                } else if (i>2 && !luckynumber.equals(tips.getString(8))) {
+                    if (i==3) {
+                        winning = result.getAsString("win_class_index3");
+                    } else if (i==4) {
+                        winning = result.getAsString("win_class_index5");
+                    } else if (i==5) {
+                        winning = result.getAsString("win_class_index3");
+                    } else if (i==6) {
+                        winning = result.getAsString("win_class_index1");
+                    }
+                    dbh.updateTip(winning, tips.getString(0));
+                }
+            } while (tips.moveToNext());
         }
     }
 
