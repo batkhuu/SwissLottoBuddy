@@ -59,8 +59,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"/>
-
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/pie_Chart"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </FrameLayout>

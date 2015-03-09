@@ -1,5 +1,11 @@
 package com.example.batkhuu.swisslottobuddy;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +47,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     // for all Toasts
     Toast toast;
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,39 +192,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
-/*    *//**
-     * A placeholder fragment containing a simple view.
-     *//*
-    public static class PlaceholderFragment extends Fragment {
-        *//**
-         * The fragment argument representing the section number for this
-         * fragment.
-         *//*
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        *//**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         *//*
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_start, container, false);
-            return rootView;
-        }
-    }*/
-
     /**
      * ################################################################################
      * Custom methods start here
@@ -267,9 +241,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             }
 
             if (now.after(drawing)) {
-                Log.v("SLB","now: "+now);
-                Log.v("SLB","tip_adoption: "+tip_adoption);
-                Log.v("SLB","drawing: "+drawing);
                 return true;
             } else {
                 return false;
@@ -281,15 +252,66 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     public void backup() {
+        String src = dbh.getPath();
+        String dst = "/sdcard/swisslottobuddy/swisslottobuddy.db";
+        File file = new File(dst);
+        File dir = new File("/sdcard/swisslottobuddy/");
 
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+
+        if(file.exists()){
+            file.delete();
+        }
+
+        try {
+            file.createNewFile();
+            copy(src,dst);
+        } catch (IOException e) {
+            Log.v("SLB", e.toString());
+            toast = Toast.makeText(this, "Backupfile konnte nicht erzeugt werden!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     public void restore() {
-
+        String dst = dbh.getPath();
+        String src = "/sdcard/swisslottobuddy/swisslottobuddy.db";
+        if(new File(src).exists()) {
+            copy(src, dst);
+        } else{
+            toast = Toast.makeText(this, "Kein Backup vorhanden!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     public void exit() {
         finish();
+    }
+
+    public void copy(String src, String dst){
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = new FileInputStream(src);
+            out = new FileOutputStream(dst);
+
+            // Transfer bytes from in to out
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            in.close();
+            out.close();
+            toast = Toast.makeText(this, "Success!", Toast.LENGTH_SHORT);
+            toast.show();
+        } catch (Exception e) {
+            Log.v("SLB", e.toString());
+            toast = Toast.makeText(this, "Oops! Da ist was schief gelaufen!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     public String fetchXml() throws ExecutionException, InterruptedException {
@@ -311,6 +333,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void checkWinning(ContentValues result) {
         List<String> numbers = new ArrayList<>();
+        numbers.clear();
         numbers.add(result.getAsString("number0"));
         numbers.add(result.getAsString("number1"));
         numbers.add(result.getAsString("number2"));

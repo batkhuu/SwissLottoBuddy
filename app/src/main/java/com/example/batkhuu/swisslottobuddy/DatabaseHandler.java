@@ -260,4 +260,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // 4. close
         db.close();
     }
+
+    public String getPath(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.getPath();
+    }
 }
