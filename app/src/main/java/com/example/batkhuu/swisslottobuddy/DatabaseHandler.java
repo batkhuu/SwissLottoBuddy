@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -171,72 +172,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor get0() {
+    public Cursor get(String q) {
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
 
         // 2. build query
-        Cursor cursor = db.rawQuery(query0, null);
-
-        // 3. return book
-        if (cursor != null) {
-            return cursor;
-        } else {
-            return null;
+        Log.v("SLB", q);
+        String query="";
+        if (q.equals("last week")) {
+            query = query0;
+        } else if (q.equals("last month")) {
+            query = query1;
+        } else if (q.equals("last half year")) {
+            query = query2;
+        } else if (q.equals("last year")) {
+            query = query3;
+        } else if (q.equals("overall")) {
+            query = query4;
         }
-    }
 
-    public Cursor get1() {
-        // 1. get reference to readable DB
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        // 2. build query
-        Cursor cursor = db.rawQuery(query1, null);
-
-        // 3. return book
-        if (cursor != null) {
-            return cursor;
-        } else {
-            return null;
-        }
-    }
-
-    public Cursor get2() {
-        // 1. get reference to readable DB
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        // 2. build query
-        Cursor cursor = db.rawQuery(query2, null);
-
-        // 3. return book
-        if (cursor != null) {
-            return cursor;
-        } else {
-            return null;
-        }
-    }
-
-    public Cursor get3() {
-        // 1. get reference to readable DB
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        // 2. build query
-        Cursor cursor = db.rawQuery(query3, null);
-
-        // 3. return book
-        if (cursor != null) {
-            return cursor;
-        } else {
-            return null;
-        }
-    }
-
-    public Cursor get4() {
-        // 1. get reference to readable DB
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        // 2. build query
-        Cursor cursor = db.rawQuery(query4, null);
+        Cursor cursor = db.rawQuery(query, null);
 
         // 3. return book
         if (cursor != null) {

@@ -91,72 +91,72 @@ public class TippFragment extends Fragment {
                         tip1.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==1){
                         tip2.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==2){
                         tip3.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==3){
                         tip4.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==4){
                         tip5.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==5){
                         tip6.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==6){
                         tip7.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==7){
                         tip8.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==8){
                         tip9.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==9){
                         tip10.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==10){
                         tip11.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==11){
                         tip12.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==12){
                         tip13.setText(tip.getAsString("number0")+" - "+tip.getAsString("number1")
                                 +" - "+tip.getAsString("number2")+" - "+tip.getAsString("number3")
                                 +" - "+tip.getAsString("number4")+" - "+tip.getAsString("number5")
-                                +" LN: "+tip.getAsString("luckynumber"));
+                                +"   LN: "+tip.getAsString("luckynumber"));
                     } else if(pos==13) {
                         tip14.setText(tip.getAsString("number0") + " - " + tip.getAsString("number1")
                                 + " - " + tip.getAsString("number2") + " - " + tip.getAsString("number3")
                                 + " - " + tip.getAsString("number4") + " - " + tip.getAsString("number5")
-                                + " LN: " + tip.getAsString("luckynumber"));
+                                + "   LN: " + tip.getAsString("luckynumber"));
                     }
                 }
 
