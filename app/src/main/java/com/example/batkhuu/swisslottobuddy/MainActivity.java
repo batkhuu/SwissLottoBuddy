@@ -201,7 +201,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     private void refresh() throws ExecutionException, InterruptedException {
         if (refreshNeeded()){
             String msg = fetchXml();
-            mViewPager.setCurrentItem(0);
+            finish();
+            startActivity(getIntent());
             toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
             toast.show();
         } else {
@@ -222,7 +223,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 e.printStackTrace();
             }
             Date now = new Date();
-            Date tip_adoption = new Date();
             Date drawing = new Date();
 
             // set last possible tip time
