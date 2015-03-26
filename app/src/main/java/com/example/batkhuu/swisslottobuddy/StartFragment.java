@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -16,7 +17,7 @@ import android.widget.TextView;
  */
 public class StartFragment extends Fragment {
 
-    TextView drawdate, nextdrawdate, jackpot, numbers, luckynumber, replaynumber, tips_nd;
+    TextView drawdate, nextdrawdate, jackpot, numbers, luckynumber, replaynumber, tips_label, tips_nd;
 
     public StartFragment() {
         // Required empty public constructor
@@ -33,7 +34,7 @@ public class StartFragment extends Fragment {
         Cursor lastDraw = dbh.getLastDraw();
 
         // Set Text for Startpage
-        if (lastDraw.moveToFirst()){
+        if (lastDraw.moveToFirst()) {
             drawdate = (TextView) view.findViewById(R.id.draw_date);
             drawdate.setText(lastDraw.getString(1));
             drawdate.setTypeface(null, Typeface.BOLD);
@@ -47,7 +48,7 @@ public class StartFragment extends Fragment {
             jackpot.setTypeface(null, Typeface.BOLD);
 
             numbers = (TextView) view.findViewById(R.id.numbers);
-            numbers.setText(lastDraw.getString(4)+", "+lastDraw.getString(5)+", "+lastDraw.getString(6)+", "+lastDraw.getString(7)+", "+lastDraw.getString(8)+", "+lastDraw.getString(9));
+            numbers.setText(lastDraw.getString(4) + ", " + lastDraw.getString(5) + ", " + lastDraw.getString(6) + ", " + lastDraw.getString(7) + ", " + lastDraw.getString(8) + ", " + lastDraw.getString(9));
             numbers.setTypeface(null, Typeface.BOLD);
 
             luckynumber = (TextView) view.findViewById(R.id.lucky_number);
@@ -60,21 +61,22 @@ public class StartFragment extends Fragment {
         }
 
         Cursor ndTips = dbh.getNdTips();
+        tips_label = (TextView) view.findViewById(R.id.tips_label);
         tips_nd = (TextView) view.findViewById(R.id.tips_nd);
 
-        if (ndTips.moveToFirst()){
+        if (ndTips.moveToFirst()) {
             String tips = "";
             do {
-                tips = tips+ndTips.getString(2)+" - "+ndTips.getString(3)+" - "+ndTips.getString(4)+" - "
-                        +ndTips.getString(5)+" - "+ndTips.getString(6)+" - "+ndTips.getString(7)+"   LN: "+
-                        ndTips.getString(8)+"\n";
+                tips = tips + ndTips.getString(2) + " - " + ndTips.getString(3) + " - " + ndTips.getString(4) + " - "
+                        + ndTips.getString(5) + " - " + ndTips.getString(6) + " - " + ndTips.getString(7) + "   LN: " +
+                        ndTips.getString(8) + "\n";
             } while (ndTips.moveToNext());
 
-            tips_nd.setText("Tipps für die nächste Ziehung:\n"+tips);
+            tips_label.setText("Tipps für die nächste Ziehung:");
+            tips_nd.setText(tips);
         } else {
-            tips_nd.setText("Keine Tipps für die nächste Ziehung");
+            tips_label.setText("Keine Tipps für die nächste Ziehung");
         }
-
         return view;
     }
 }

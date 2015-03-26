@@ -29,14 +29,14 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:text="Ausgaben:"/>
 
             <TextView
                 android:id="@+id/ausgaben"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.6"/>
         </LinearLayout>
 
         <LinearLayout
@@ -46,13 +46,13 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:text="Gewinn:"/>
             <TextView
                 android:id="@+id/gewinn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.6"/>
         </LinearLayout>
 
         <LinearLayout

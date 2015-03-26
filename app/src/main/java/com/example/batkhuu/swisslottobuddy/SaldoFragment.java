@@ -57,41 +57,38 @@ public class SaldoFragment extends Fragment {
                 int []colors = new int[]{Color.RED, Color.GREEN};
                 DefaultRenderer renderer = new DefaultRenderer();
 
-                if (cs == null) {
-                    Log.v("SLB", "hat null");
-                } else if (cs.moveToFirst()) {
-                    ausgaben.setText(cs.getString(0));
-                    gewinn.setText(cs.getString(1));
-                    Log.v("SLB", cs.getInt(0)+" "+cs.getInt(1));
+                if (cs.moveToFirst() && cs.getString(0) != null) {
+                    ausgaben.setText(cs.getString(0)+" CHF");
+                    gewinn.setText(cs.getString(1)+" CHF");
                     series.add("Ausgaben", cs.getInt(0));
                     series.add("Gewinn", cs.getInt(1));
+
+                    for(int color : colors){
+                        SimpleSeriesRenderer r = new SimpleSeriesRenderer();
+                        r.setColor(color);
+                        r.setDisplayChartValues(true);
+                        r.setChartValuesTextSize(15);
+                        renderer.addSeriesRenderer(r);
+                    }
+
+                    renderer.isInScroll();
+                    renderer.setPanEnabled(false);
+                    renderer.setZoomEnabled(false);
+                    renderer.setChartTitleTextSize((float) 50);
+                    renderer.setShowLabels(false);
+                    renderer.setLabelsTextSize(20);
+                    renderer.setLegendTextSize(25);
+
+                    graphicalView[0] = ChartFactory.getPieChartView(getActivity(),series,renderer);
+                    // Adding the pie chart to the custom layout
+                    pieChartCont.removeAllViews();
+                    pieChartCont.addView(graphicalView[0]);
                 }
-
-                for(int color : colors){
-                    SimpleSeriesRenderer r = new SimpleSeriesRenderer();
-                    r.setColor(color);
-                    // r.setDisplayBoundingPoints(true);
-                    // r.setDisplayChartValuesDistance(5);
-                    r.setDisplayChartValues(true);
-                    r.setChartValuesTextSize(15);
-                    renderer.addSeriesRenderer(r);
+                else {
+                    ausgaben.setText("0 CHF");
+                    gewinn.setText("0 CHF");
+                    pieChartCont.removeAllViews();
                 }
-
-                renderer.isInScroll();
-                //renderer.setZoomButtonsVisible(false); //setting zoom button of Graph
-                //renderer.setApplyBackgroundColor(false);
-                //renderer.setBackgroundColor(Color.BLACK); //setting background color of chart
-                renderer.setPanEnabled(false);
-                renderer.setZoomEnabled(false);
-                //renderer.setChartTitle("Result Chart"); //setting title of chart
-                renderer.setChartTitleTextSize((float) 50);
-                renderer.setShowLabels(false);
-                renderer.setLabelsTextSize(20);
-                renderer.setLegendTextSize(25);
-
-                graphicalView[0] = ChartFactory.getPieChartView(getActivity(),series,renderer);
-                // Adding the pie chart to the custom layout
-                pieChartCont.addView(graphicalView[0]);
             }
 
             @Override

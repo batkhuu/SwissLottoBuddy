@@ -177,7 +177,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // 2. build query
-        Log.v("SLB", q);
         String query="";
         if (q.equals("last week")) {
             query = query0;
@@ -190,6 +189,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         } else if (q.equals("overall")) {
             query = query4;
         }
+        //Log.v("SLB", query);
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -204,7 +204,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void updateTip(String win, String id){
         // 1. set Query
         String updateQuery = "UPDATE "+TIPS_TABLE+" SET "+T_WINNING+"="+win+" WHERE "+D_ID+"="+id+";";
-        //Log.v("SLB", updateQuery);
 
         // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();

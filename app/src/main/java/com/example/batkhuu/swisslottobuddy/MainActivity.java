@@ -132,16 +132,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        //Log.v("SLB", "onTabSelected "+tab.getPosition());
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        //fragmentTransaction.remove()
+
     }
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // this code refreshes the fragments
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
@@ -213,32 +215,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private boolean refreshNeeded() {
         Cursor cursor = dbh.getLastDraw();
-        if (cursor.moveToFirst()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
-            SimpleDateFormat sdf_wd = new SimpleDateFormat("dd.MM.yyyy");
-            Date weekday = new Date();
-            try {
-                weekday = sdf_wd.parse(cursor.getString(2));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Date now = new Date();
-            Date drawing = new Date();
 
-            // set last possible tip time
-            if (new SimpleDateFormat("EE").format(weekday).equals("Mi.")) {
-                try {
-                    drawing = sdf.parse(cursor.getString(2) + " 21:55");
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            } else if (new SimpleDateFormat("EE").format(weekday).equals("Sa.")) {
-                try {
-                    drawing = sdf.parse(cursor.getString(2) + " 19:35");
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
+        Date now = new Date();
+        Date drawing;
+        Date lastTipTime;
+        String date = Integer.toString(now.getDate())+"."+Integer.toString(now.getMonth()+1)+"."+Integer.toString(now.getYear()+1900);
+
+        if (cursor.moveToFirst()) {
+            drawing = getDrawingTime(cursor.getString(2));
 
             if (now.after(drawing)) {
                 return true;
@@ -247,8 +231,89 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             }
         }
         else {
-            return true;
+            drawing = getDrawingTime(date);
+            lastTipTime = getLastTipTime(date);
+            if(now.after(drawing) || now.before(lastTipTime)){
+                Log.v("SLBAT", drawing.toString());
+                return true;
+            } else {
+                return false;
+            }
         }
+    }
+
+    public Date getDrawingTime(String date){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+        SimpleDateFormat sdf_wd = new SimpleDateFormat("dd.MM.yyyy");
+
+        Date drawing = new Date();
+        Date weekday = new Date();
+
+        try {
+            weekday = sdf_wd.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // set last possible tip time
+        if (new SimpleDateFormat("EE").format(weekday).equals("Mi.")) {
+            try {
+                drawing = sdf.parse(date + " 21:55");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else if (new SimpleDateFormat("EE").format(weekday).equals("Sa.")) {
+            try {
+                drawing = sdf.parse(date + " 19:35");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                drawing = sdf.parse(date + " 00:00");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return drawing;
+    }
+
+    public Date getLastTipTime(String date){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+        SimpleDateFormat sdf_wd = new SimpleDateFormat("dd.MM.yyyy");
+
+        Date drawing = new Date();
+        Date weekday = new Date();
+
+        try {
+            weekday = sdf_wd.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // set last possible tip time
+        if (new SimpleDateFormat("EE").format(weekday).equals("Mi.")) {
+            try {
+                drawing = sdf.parse(date + " 18:55");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else if (new SimpleDateFormat("EE").format(weekday).equals("Sa.")) {
+            try {
+                drawing = sdf.parse(date + " 16:55");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                drawing = sdf.parse(date + " 23:59");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return drawing;
     }
 
     public void backup() {
