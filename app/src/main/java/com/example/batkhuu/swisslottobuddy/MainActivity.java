@@ -132,13 +132,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        //Log.v("SLB", "onTabSelected "+tab.getPosition());
+        Log.v("SLB", "onTabSelected "+tab.getPosition());
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        //fragmentTransaction.remove()
 
     }
 
@@ -234,7 +233,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             drawing = getDrawingTime(date);
             lastTipTime = getLastTipTime(date);
             if(now.after(drawing) || now.before(lastTipTime)){
-                Log.v("SLBAT", drawing.toString());
                 return true;
             } else {
                 return false;
